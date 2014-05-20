@@ -1,0 +1,172 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html> 
+<head>
+  
+<style type="text/css">
+
+h4{
+    text-transform: uppercase;
+  padding-left: 10px;
+  margin: 4px 0 0 0;
+}
+
+#filter_criteria_box{
+    margin-right:10px; background:#cbcbcb; border-radius:6px; width:68%; margin-bottom:10px;
+}
+
+
+#filter_criteria_first{
+min-width: 35%;
+}
+
+#filter_criteria_second{
+  width:60%; border:1px solid #000; padding-left:10px;
+}
+
+#more_filter_box{
+ display: none;
+ clear:both; 
+ padding:10px 0; 
+ border:1px solid #333; 
+ width:90%; 
+ padding:20px; 
+ margin:10px auto;
+background-color: #ececec;
+}
+
+#show_more_filter{
+  margin: 10px 10px;
+  clear:both;
+  width: 100%;
+
+  
+}
+
+#InputsWrapper{
+  line-height: 10px;
+}
+
+.pull-left{
+float: left;
+}
+</style>
+
+<script type="text/javascript" src="jquery.js"></script>
+</head>
+<body>
+  
+ 
+<div class="pull-left" id="filter_criteria_box">
+ 
+    <h4>Filter Criteria</h4>
+        <div class="pull-left" id="filter_criteria_first">
+            <p>
+                <label>* Account Group:</label><br>
+                <select><option value="ACCOUNT GROUP OPTION">ACCOUNT GROUP OPTION</option></select>
+            </p>
+            <p>
+                <label>* ANOTHER Group:</label><br>
+                <select><option value="BAI GROUP OPTION">ANOTHER GROUP OPTION</option></select>
+            </p>
+            
+        </div>
+        <div class="pull-left" id="filter_criteria_second">
+            <h5>Date Options</h5>
+                <ul  style="list-style-type:none; margin-left:-25px; line-height:150%;">
+                    <li><input type="radio"  value="all" name="contains_radio"/>All</li>
+                    <li><input type="radio"  value="all" name="contains_radio"/>Business Days <input type="textbox" style="width:30px;"/></li>
+                    <li><input type="radio"  value="all" name="contains_radio"/>Monthy Range <input type="textbox" style="width:30px;"/> <input type="textbox" style="width:30px;" /> and <input type="textbox"  style="width:30px;"/></li>
+                    <li><input type="radio"  value="all" name="contains_radio"/>Date Range</li>
+                </ul>
+        </div>
+		<h3>Here are the dynamic inputs</h3>
+    <p class="pull-left" id="show_more_filter"><a href="#" >Show more</a> filter options <span id="how_many_filters"></span></p>
+     <div id="more_filter_box">
+
+        <label class="formRightSpacingFilterText">Search Text:</label><input type="radio" value="Contains" checked="checked" name="contains_radio" id="contains"/> Contains <input type="radio"  value="Not Contains" name="contains_radio" id="not-contains"/> Not Contains
+           
+        <div id="InputsWrapper" style="max-height:200px; overflow:auto;">
+            <div><select id="parensLeft0">
+                <option> </option><option>(</option><option>((</option><option>(((</option></select> <input type="text" name="mytext0" id="field_'+ FieldCount +'" value="Text"/><select id="parensLeft"><option> </option><option>)</option><option>))</option><option>)))</option></select> <select id="select0"><option>or</option><option>and</option></select>  <a href="#" class="removeclass">&times;</a>
+            </div>
+        </div>
+        <input class="button" type="button" id="AddMoreFileBox" value="Add More"/>
+    </div>
+</div>
+ 
+
+<script>
+$(document).ready(function() {
+  
+     $('#show_more_filter a').click(function(){
+       if($("#show_more_filter a").text()=="Show more")
+         { $("#show_more_filter a").text("Show less");  
+        }
+        else{ $("#show_more_filter a").text("Show more");
+        };
+      
+      $('#more_filter_box').slideToggle('fast');
+      return false;
+     });  
+
+     $('#not-contains').click(function(){
+      $('#InputsWrapper').find('select').css('display','none');
+
+     });
+     $('#contains').click(function(){
+      $('#InputsWrapper').find('select').show();
+
+     });
+
+      var MaxInputs       = 28; //maximum input boxes allowed
+      var InputsWrapper   = $("#InputsWrapper");  
+      var AddButton       = $("#AddMoreFileBox"); 
+      var x = 1 ;//InputsWrapper.length; //initlal text box count
+      var FieldCount=1; //to keep track of text box added
+      //var stringArr=[];
+      $(AddButton).click(function (e)  //on add input button click
+        {
+            
+                if(x <= MaxInputs) //max input box allowed
+                {
+                    FieldCount++; //text box added increment
+                    //add input box
+                    var $allInputs = '<div><select id="parensLeft' +FieldCount +'"><option> </option><option>(</option><option>((</option><option>(((</option></select> <input type="text" name="mytext[]" id="field_'+ FieldCount +'" value="Text '+ FieldCount +'"/><select id="parensLeft' +FieldCount +'"><option> </option><option>)</option><option>))</option><option>)))</option></select> <select id="select1' +FieldCount +'"><option>or</option><option>and</option></select>  <a href="#" class="removeclass">&times;</a></div>';
+                    //var $query_build = '<span> what was selecteds val</span>';
+
+
+                $(InputsWrapper).append($allInputs);
+               
+                    x++; //text box increment
+                }
+
+
+                 
+                if($("input:radio[id='not-contains']").is(":checked")){
+                 $('#InputsWrapper').find('select').css('display','none');
+               };
+
+
+              
+        return false;
+        });
+
+    $("body").on("click",".removeclass", function(e){ //user click on remove text ----changed from 1 so that all rows can be removed
+            if( x > 0 ) {
+                    $(this).parent('div').remove(); //remove text box
+                    
+                    x--; //decrement textbox
+                    console.log('After: '+x);
+                    //$('#how_many_filters').text(x);
+            }
+    return false;
+    }) 
+
+});
+</script>
+
+</body>
+
+</html>
+
