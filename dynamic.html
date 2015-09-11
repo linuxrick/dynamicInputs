@@ -1,8 +1,8 @@
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
-<html> 
+<!DOCTYPE html> 
+<html>
 <head>
-  
+
 <style type="text/css">
 
 h4{
@@ -26,11 +26,11 @@ min-width: 35%;
 
 #more_filter_box{
  display: none;
- clear:both; 
- padding:10px 0; 
- border:1px solid #333; 
- width:90%; 
- padding:20px; 
+ clear:both;
+ padding:10px 0;
+ border:1px solid #333;
+ width:90%;
+ padding:20px;
  margin:10px auto;
 background-color: #ececec;
 }
@@ -40,7 +40,7 @@ background-color: #ececec;
   clear:both;
   width: 100%;
 
-  
+
 }
 
 #InputsWrapper{
@@ -55,10 +55,10 @@ float: left;
 <script type="text/javascript" src="jquery.js"></script>
 </head>
 <body>
-  
- 
+
+
 <div class="pull-left" id="filter_criteria_box">
- 
+
     <h4>Filter Criteria</h4>
         <div class="pull-left" id="filter_criteria_first">
             <p>
@@ -69,7 +69,7 @@ float: left;
                 <label>* ANOTHER Group:</label><br>
                 <select><option value="BAI GROUP OPTION">ANOTHER GROUP OPTION</option></select>
             </p>
-            
+
         </div>
         <div class="pull-left" id="filter_criteria_second">
             <h5>Date Options</h5>
@@ -85,7 +85,7 @@ float: left;
      <div id="more_filter_box">
 
         <label class="formRightSpacingFilterText">Search Text:</label><input type="radio" value="Contains" checked="checked" name="contains_radio" id="contains"/> Contains <input type="radio"  value="Not Contains" name="contains_radio" id="not-contains"/> Not Contains
-           
+
         <div id="InputsWrapper" style="max-height:200px; overflow:auto;">
             <div><select id="parensLeft0">
                 <option> </option><option>(</option><option>((</option><option>(((</option></select> <input type="text" name="mytext0" id="field_'+ FieldCount +'" value="Text"/><select id="parensLeft"><option> </option><option>)</option><option>))</option><option>)))</option></select> <select id="select0"><option>or</option><option>and</option></select>  <a href="#" class="removeclass">&times;</a>
@@ -94,21 +94,21 @@ float: left;
         <input class="button" type="button" id="AddMoreFileBox" value="Add More"/>
     </div>
 </div>
- 
+
 
 <script>
 $(document).ready(function() {
-  
+
      $('#show_more_filter a').click(function(){
        if($("#show_more_filter a").text()=="Show more")
-         { $("#show_more_filter a").text("Show less");  
+         { $("#show_more_filter a").text("Show less");
         }
         else{ $("#show_more_filter a").text("Show more");
         };
-      
+
       $('#more_filter_box').slideToggle('fast');
       return false;
-     });  
+     });
 
      $('#not-contains').click(function(){
       $('#InputsWrapper').find('select').css('display','none');
@@ -120,14 +120,14 @@ $(document).ready(function() {
      });
 
       var MaxInputs       = 28; //maximum input boxes allowed
-      var InputsWrapper   = $("#InputsWrapper");  
-      var AddButton       = $("#AddMoreFileBox"); 
+      var InputsWrapper   = $("#InputsWrapper");
+      var AddButton       = $("#AddMoreFileBox");
       var x = 1 ;//InputsWrapper.length; //initlal text box count
       var FieldCount=1; //to keep track of text box added
       //var stringArr=[];
       $(AddButton).click(function (e)  //on add input button click
         {
-            
+
                 if(x <= MaxInputs) //max input box allowed
                 {
                     FieldCount++; //text box added increment
@@ -137,31 +137,31 @@ $(document).ready(function() {
 
 
                 $(InputsWrapper).append($allInputs);
-               
+
                     x++; //text box increment
                 }
 
 
-                 
+
                 if($("input:radio[id='not-contains']").is(":checked")){
                  $('#InputsWrapper').find('select').css('display','none');
                };
 
 
-              
+
         return false;
         });
 
     $("body").on("click",".removeclass", function(e){ //user click on remove text ----changed from 1 so that all rows can be removed
             if( x > 0 ) {
                     $(this).parent('div').remove(); //remove text box
-                    
+
                     x--; //decrement textbox
                     console.log('After: '+x);
                     //$('#how_many_filters').text(x);
             }
     return false;
-    }) 
+    })
 
 });
 </script>
@@ -169,4 +169,3 @@ $(document).ready(function() {
 </body>
 
 </html>
-
